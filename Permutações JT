@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+vector<vector<int>> JT(int n) {
+    vector<vector<int>> result;
+    for (int i = 1; i < n+1 ; i++) {
+        if (i==1) {
+            vector<int> vetoraux = { 1 };
+            result.push_back(vetoraux);
+        }
+        else {
+            vector<vector<int>> aux;
+            for (int j = 0; j < result.size(); j++) {  //percorrrer o result
+                vector <int> dado = result[j];  // salvar em dado o elemento do result
+                for (int k=0; k<i; k++) { // percorrer o dado
+                    vector<int> dadoaux = dado;
+                    dadoaux.emplace(dadoaux.begin()+k, i); //adicionar i ao vetor de permutações
+                    aux.push_back(dadoaux);
+                }
+            }
+            result = aux;
+        }
+    }
+    return result;
+}
+
+void showlist(vector<vector<int>> g)
+{
+     for (int i=0; i != g.size(); i++) {
+        vector<int> h = g[i];
+        for (int j =0; j != h.size(); j++) {
+            cout << h[j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main()
+{
+    vector<vector<int>> v = JT(4);
+    showlist(v);
+
+}
