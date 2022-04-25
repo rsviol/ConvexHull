@@ -1,27 +1,27 @@
 #include <iostream>
 #include <vector>
-#include <stdint.h>
 
 using namespace std;
 
-int peso(vector<int>& v, int begin, int end){
+int Peso(vector<int>& v, int begin, int end) {
     int soma = 0;
-    for(int i = begin; i!=end; i++){
+    for (int i = begin; i != end; i++) {
         soma += v[i];
     }
     return soma;
 }
 
-int FakeCoin (vector<int>& v, int begin, int end){
-    if((end-begin) > 1){
-        if(peso(v,begin,(begin+end)/2) > peso(v,((begin+end)/2),end)){
-            end=(begin+end)/2;
-        }else{
-           begin =(begin+end)/2;
+int FakeCoin(vector<int>& v, int begin, int end) {
+    if ((end - begin) > 1) {
+        if (Peso(v, begin, (begin + end) / 2) > Peso(v, ((begin + end) / 2), end)) {
+            FakeCoin(v, begin, (begin + end) / 2);
         }
-        FakeCoin(v,begin,end);
-    }else{
-        return (v[begin]>v[end]) ? v[begin]:v[end];
+        else {            
+            FakeCoin(v, (begin + end) / 2, end);
+        }        
+    }
+    else {
+        return (v[begin] > v[end]) ? begin : end;
     }
 
 }
@@ -29,12 +29,12 @@ int FakeCoin (vector<int>& v, int begin, int end){
 int main()
 {
     vector<int> v;
-    for(int i=1; i<15; i++){
-        v.push_back({1});
+    for (int i = 1; i < 15; i++) {
+        v.push_back({ 1 });
     }
 
-    v.emplace(v.begin()+6,2);
+    v.emplace(v.begin() + 3, 2);
 
-    int result = FakeCoin(v,0,v.size()-1);
-    cout << result <<endl;
+    int result = FakeCoin(v, 0, v.size() - 1);
+    cout << result << endl;
 }
