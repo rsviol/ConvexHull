@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int Peso(vector<int>& v, int begin, int end) {
+int Peso(vector<int>& v, int begin, int end) { //O equivalente a calcular o peso da pilha de moedas
     int soma = 0;
     for (int i = begin; i != end; i++) {
         soma += v[i];
@@ -13,8 +13,8 @@ int Peso(vector<int>& v, int begin, int end) {
 
 int FakeCoin(vector<int>& v, int begin, int end) {
     if ((end - begin) > 1) {
-        if (Peso(v, begin, (begin + end) / 2) > Peso(v, ((begin + end) / 2), end)) {
-            FakeCoin(v, begin, (begin + end) / 2);
+        if (Peso(v, begin, (begin + end) / 2) > Peso(v, ((begin + end) / 2), end)) { //divide a pilha em duas e vê qual tem o maior peso, esta pilha é dividida até que tenha 2 moedas apenas para comparar
+            FakeCoin(v, begin, (begin + end) / 2); 
         }
         else {            
             FakeCoin(v, (begin + end) / 2, end);
@@ -30,11 +30,11 @@ int main()
 {
     vector<int> v;
     for (int i = 1; i < 15; i++) {
-        v.push_back({ 1 });
+        v.push_back({ 1 }); //cria uma pilha de moedas com peso 1
     }
 
-    v.emplace(v.begin() + 3, 2);
+    v.emplace(v.begin() + 3, 2); //adiciona uma moeda de peso 2 à posição 3
 
-    int result = FakeCoin(v, 0, v.size() - 1);
+    int result = FakeCoin(v, 0, v.size() - 1); //retorna a posição da moeda falsa
     cout << result << endl;
 }
