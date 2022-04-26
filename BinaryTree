@@ -1,0 +1,90 @@
+#include <iostream>
+#include "Folha.h"
+#include <vector>
+
+using namespace std;
+
+void incluirFolha(vector<Folha>& v, int f){
+    if(v.empty()){
+        Folha folha;
+        folha.setDado(f);
+        folha.setDireita(-1);
+        folha.setEsquerda(-1);
+        v.push_back(folha);
+    }else{
+        int i=0;
+        bool full = true;
+        while(full){
+                Folha base = v[i];
+                if(f > base.getDado()){
+                    if(base.getDireita() == -1){
+                        full=false;
+                        Folha folha;
+                        folha.setDado(f);
+                        folha.setDireita(-1);
+                        folha.setEsquerda(-1);
+                        v.push_back(folha);
+                        v[i].setDireita(v.size()-1);
+                    }
+                    else{
+                        i = v[i].getDireita();
+                    }
+            }else{
+                    if(base.getEsquerda() == -1){
+                        full=false;
+                        Folha folha;
+                        folha.setDado(f);
+                        folha.setDireita(-1);
+                        folha.setEsquerda(-1);
+                        v.push_back(folha);
+                        v[i].setEsquerda(v.size()-1);
+                    }
+                    else{
+                        i = v[i].getEsquerda();
+                    }
+                }
+            }
+    }
+}
+
+int BuscarFolha(vector<Folha> v, int k){
+    bool full=true;
+    int i =0;
+    if(v.size()==0){
+        cout<<"Vetor vazio"<<endl;
+    }else{
+        while(full){
+            if(k > v[i].getDado()){
+                if(v[i].getDireita()==NULL){
+                    cout<<"Valor não localizado"<<endl;
+                    full=false;
+                }else{
+                    i = v[i].getDireita();
+                }
+            }else if(k < v[i].getDado()){
+                if(v[i].getEsquerda() == NULL){
+                    cout<<"Valor não localizado"<<endl;
+                    full= false;
+                }else{
+                    i = v[i].getEsquerda();
+                }
+            }else{
+                return i;
+                full = false;
+            }
+        }
+    }
+}
+
+int main()
+{
+        vector<Folha>v;
+        for(int i=0; i<20; i++){
+            int num = rand()%100;
+            incluirFolha(v,num);
+            cout<<num<<" ";
+        }
+        cout<<endl;
+        int result = BuscarFolha(v,36);
+        cout<< result<< endl;
+}
