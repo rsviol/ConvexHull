@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int Mediana(vector<int> v){
+    int menor1 =0;
+    int mediana1 =0;
+    int mediana2 =0;
+    int par = -1;
+    for(int i=0; i<v.size(); i++){
+        par *= -1;
+        int direita=0;
+        int esquerda=0;
+        for(int j=0; j<v.size(); j++){
+            if(i!=j){
+                if(v[i]>v[j] || v[i]==v[j]){
+                    esquerda++;
+                }else{
+                    direita++;
+                }
+            }
+        }
+        if(i==0){
+            menor1= abs(direita-esquerda);
+            mediana1 = i;
+        }else{
+            if(abs(direita-esquerda) < menor1){
+                menor1 = abs(direita-esquerda);
+                mediana2 = mediana1;
+                mediana1 = i;
+        }else if(abs(direita-esquerda) == menor1){
+                mediana2 = i;
+            }
+    }
+
+    }
+    if(par>0){
+        return v[mediana1];
+    }else{
+        return((v[mediana1]+v[mediana2])/2);
+    }
+}
+
+int main()
+{
+    vector<int>v;
+    for(int i=0; i<20; i++){
+        int num = rand()%100;
+        v.push_back(num);
+        cout<<num<<" ";
+    }
+    cout<<endl;
+    int result = Mediana(v);
+    cout<< result<< endl;
+}
