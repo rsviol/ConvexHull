@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int HoarePartition(vector<int>& v, int begin, int end){
+    int p =v[end];
+    int i = begin-1;
+    for(int j = begin; j<=end; j++){
+        if(v[j]<p){
+            i++;
+            swap(v[i],v[j]);
+        }
+    }
+    swap(v[i+1],v[end]);
+    return i+1;
+}
+
+void Sort(vector<int>& v, int begin, int end){
+
+
+    if(begin<end){
+        int s = HoarePartition(v,begin,end);
+        Sort(v,begin,s-1);
+        Sort(v,s+1,end);
+    }
+}
+
+vector<int> QuickSort(vector<int>& v){
+    Sort(v,0,v.size()-1);
+    return v;
+}
+
+int main()
+{
+    vector<int> v ={1,9,15,23,6,7,8,5,2,4};
+    vector<int> result = QuickSort(v);
+    for(int i=0;i<result.size();i++){
+        cout<<result[i]<<" ";
+    }
+    cout<<endl;
+}
