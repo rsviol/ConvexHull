@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+
+vector<int> Merge(vector<int>& b, vector<int>& c, vector<int>& a){
+   int i=0 , j=0, k=0;
+
+    while( i < b.size() && j< c.size()){
+        if(b[i]<=c[j]){
+            a[k]=b[i];
+            i++;
+        }else{
+            a[k]=c[j];
+            j++;
+        }
+        k++;
+    }
+    if(i==b.size()){
+        for(j; j<c.size(); j++){
+            a[k]=c[j];
+            k++;
+        }
+    }else if(j==c.size()){
+        for(i; i<b.size(); i++){
+            a[k]=b[i];
+            k++;
+        }
+    }
+    return a;
+}
+
+
+vector<int> Sort(vector<int>& a, int begin, int end ){
+    if(end-begin>1){
+        vector<int> b = Sort (a, begin, ((begin+end)/2)-1);
+        vector<int> c = Sort (a, ((begin+end)/2) , end);
+        return Merge (b,c,a);
+    }
+    return a;
+}
+
+vector<int> MergeSort(vector<int>& v){
+    return Sort(v,0,(v.size()-1));
+}
+
+int main()
+{
+    vector<int>v;
+    for(int i=0; i<6; i++){
+        int num = rand()%100;
+        v.push_back(num);
+        cout<<num<<" ";
+    }
+    cout<<endl;
+
+    vector<int> result = MergeSort(v);
+
+    for(int i=0; i<result.size(); i++){
+        cout<< result[i]<< " ";
+    }
+    cout<<endl;
+
+}
