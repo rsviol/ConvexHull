@@ -1,0 +1,33 @@
+// ChangeMake.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
+//
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int ChgMake(int n, vector<int>& D) {
+    vector<int> f;
+    f.push_back(0);
+    
+    for (int i = 1; i < n+1; i++) {
+        int temp = 1000000;
+        int j = 0;
+        while (j < D.size() && i >= D[j]) {
+            int position = i - D[j];            
+            temp = (f[position] < temp) ? f[position] : temp;            
+            j++;
+        }
+        
+        f.push_back( temp + 1 );
+        
+    }
+    return f[n];
+}
+
+int main()
+{
+    int n = 6;
+    std::vector<int> D = { 1,3,4 };
+    cout << ChgMake(n, D) << endl;
+}
