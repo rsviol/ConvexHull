@@ -1,0 +1,69 @@
+// NQueens.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
+//
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool encontra( int l, int c, vector<int>& result) {
+    bool encontra = false;
+    for (int i = 0; i < result.size(); i++) {
+        if (result[i] != -1) {
+            if (c == result[i] || abs(result[i] - c) == abs(l - i)) {
+                encontra = true;
+            }        
+        }
+    }
+    return encontra;
+}
+
+int colocarRainha(int linha, vector<int>& result, int n) {
+    if (linha == n) {
+        
+        return 1;
+        for (int i = 0; i < n; i++) {
+            cout << result[i] << " ";
+        }
+        
+    }
+    else {
+        int total = 0;
+        for (int col = 0; col < n; col++) {
+            if (!encontra(linha, col, result) && total!=1) {
+                result[linha] = col;                
+                for (int l = linha + 1; l < n; l++) {
+                    result[l] = -1;
+                }                
+                total += colocarRainha(linha + 1, result, n); 
+               
+            }
+            else {
+                //cout << "encontou na linha " << linha << " e na coluna " << col << endl;
+            }
+        }
+        if (total != 1) {
+            result[linha] = -1;
+        }        
+        return total;
+   }
+    
+}
+
+void nQueens(int n) {
+   
+    vector<int> result (n, -1);
+
+    int total = colocarRainha(0, result, n);
+    for (int i = 0; i < n; i++) {
+        cout << result[i] << " ";
+    }  
+}
+
+
+
+int main()
+{
+    int n = 4;
+    nQueens(n);
+    
+}
