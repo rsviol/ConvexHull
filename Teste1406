@@ -1,0 +1,119 @@
+// Prova.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
+//
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//Exercicio 2
+
+bool achaValor(vector<vector<int>>& v, int begin, int end, int k) {
+    if (end - begin == 0) {
+        for (int i = 0; i < v[begin].size(); i++) {
+            if (v[begin][i] == k) {
+                return true;
+            }
+        }
+        return false;
+    }
+    else {
+        achaValor(v, begin, (begin + end) / 2, k);
+        achaValor(v, (begin + end) / 2 + 1, end, k);
+    }
+}
+
+
+bool Exercicio2(vector<vector<int>>& v, int k) {
+    return achaValor(v, 0, v.size()-1, k);
+}
+
+
+
+
+// Exercicio 3
+
+
+bool Epar(int n) {
+    if (n % 2 == 0) {
+       
+        return true;
+    }
+}
+
+bool somaOk(vector<int>& v, int k) {
+    int somaI = 0;
+    int somaP = 0;
+    for (int i = 0; i < v.size(); i++) {
+        Epar(i) ? somaP += v[i] :  somaI += v[i];       
+    }
+    Epar(v.size()) ? somaP += k : somaI += k;
+    
+    return (somaI > somaP) ? true : false;
+}
+
+void printResult(vector<int>& v) {
+    for (int i = 0; i < v.size(); i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+}
+
+void variaveis(vector<int>& v, int pos, vector<int>& result) {
+
+    if (pos == v.size()) {
+        pos = 0;
+    }
+   
+    if (result.size() == 5 * v.size()) {
+        printResult(result);
+        return;
+    }
+
+
+    if (Epar(pos) && Epar(v[pos]) && somaOk(result, v[pos])) {
+        result.push_back(v[pos]);
+        cout << v[pos] << " ";
+        variaveis(v, (pos + 1), result);
+        result.pop_back();
+        return;
+    }
+    else if (!Epar(pos) && !Epar(v[pos]) && somaOk(result, v[pos])) {
+        result.push_back(v[pos]);
+        cout << v[pos] << " ";
+        variaveis(v, (pos + 1), result);
+        result.pop_back();
+        return;
+    }
+    else {
+        variaveis(v, (pos + 1), result);
+
+    }
+}
+
+
+void Exercicio3(vector<int> v) {
+    vector<int> result;
+    variaveis(v, 0, result);
+
+}
+
+
+
+
+int main()
+{
+    vector<vector<int>> v = {
+        {1,2,3,4},
+        {5,6,7,8},
+        {9,10,11,12},
+        {13,14,15,16}
+    };
+
+    cout << Exercicio2(v,17) << endl;
+
+
+    vector<int> vetor = { 1,2,3,4,5,6,8,9,7,10,11 };
+    Exercicio3(vetor);
+
+}
